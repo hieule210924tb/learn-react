@@ -1,62 +1,28 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
-function Content(){
-  const [state, setState] = useState(0)
-  const [action, setAtion]= useState('')
-  const [resize, setResize] = useState(window.innerWidth)
-  const [scroll, setScroll] = useState(false)
-  const [post, setPost] = useState([])
-    useEffect(()=>{
-        document.title = `you has click ${state}`
-        console.log('useEffect');
-    },[action])
-    useEffect(()=>{
-        const handleResize= ()=>{
-            setResize(window.innerWidth)
-        }
-           window.addEventListener('resize', handleResize)
+function Content() {
+    const [avatar, setAvatar] =useState()
 
-        return()=>{
-            window.removeEventListener('resize', handleResize)  
-        }
-    },[resize])
+    const handleImg = (e) =>{
+       const file = e.target.files[0] //Lấy tệp hình ảnh đầu tiên mà người dùng chọn (e.target.files[0])
+       setAvatar(URL.createObjectURL(file)) //Tạo URL tạm thời và  lưu vào state
+    }
     useEffect(()=>{
-        const handleSroll = () =>{
-            window.scrollY >=200 ? setScroll(true) : setScroll(false)
-        }
-            window.addEventListener('scroll', handleSroll)
-            return()=>{
-            window.removeEventListener('scroll', handleSroll)
-            }
-    },[scroll])
-    useEffect(()=>{
-        fetch('https://jsonplaceholder.typicode.com/posts')
-        .then(res =>res.json())
-        .then(shows =>{
-           setPost(shows) 
-    })
-},[])
-    return(
+        // URL.revokeObjectURL(avatar) giúp giải phóng bộ nhớ khi avatar thay đổi hoặc component bị unmount.
+       return ()=>{ //Khi chọn ảnh khác, ảnh cũ sẽ được giải phóng bộ nhớ.
+       URL.revokeObjectURL(avatar)
+       }
+       
+    },[avatar])
+    return (
         <div>
-            <h1>{state}</h1>
-            <button
-             onClick={()=>setState(state+1)}
-            >Click me!</button>
-            <button onClick={()=> setAtion('User')}>Get Users</button>
-            <button onClick={()=> setAtion('Comment')}>Get Comments</button>
-            <p>{`Chiều ngang của màn hình ${resize}`}</p>
-            <ul>
-                {post.map(posts =>(<li key={posts.id}>{posts.title}</li>))}
-            </ul>
-            {scroll && <button 
-              style={{
-                position:'fixed',
-                right:'30px',
-                bottom:'30px'
-              }}
-            >ShowGoToTop</button>}
+            <input 
+             type="file"
+             onChange={handleImg}
+            />   
+            {avatar && (<img src={avatar} alt="" width='20%' />)}            
         </div>
-    )
+    );
 }
 
-export default Content  
+export default Content;
