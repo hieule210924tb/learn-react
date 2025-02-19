@@ -1,26 +1,44 @@
 import { useEffect, useState } from "react";
 
 function Content() {
-    const [avatar, setAvatar] =useState()
-
-    const handleImg = (e) =>{
-       const file = e.target.files[0] //Lấy tệp hình ảnh đầu tiên mà người dùng chọn (e.target.files[0])
-       setAvatar(URL.createObjectURL(file)) //Tạo URL tạm thời và  lưu vào state
-    }
+    const [lessonId , setLessonId] = useState(1)
+    const lessons= [
+        {
+            id:1,
+            name:'useEffect with fake Chat App'
+        },
+        {
+            id:2,
+            name:'useEffect with preview avatar'
+        },
+        {
+            id:3,
+            name:'useEffect with timer functions'
+        },
+    ]
     useEffect(()=>{
-        // URL.revokeObjectURL(avatar) giúp giải phóng bộ nhớ khi avatar thay đổi hoặc component bị unmount.
-       return ()=>{ //Khi chọn ảnh khác, ảnh cũ sẽ được giải phóng bộ nhớ.
-       URL.revokeObjectURL(avatar)
-       }
-       
-    },[avatar])
+        const handleComment =({detail})=>{
+              console.log(detail);
+        }
+        window.addEventListener(`lesson-${lessonId}`, handleComment)
+        return()=>{
+            window.removeEventListener(`lesson-${lessonId}`, handleComment)
+        }
+    },[lessonId])
     return (
         <div>
-            <input 
-             type="file"
-             onChange={handleImg}
-            />   
-            {avatar && (<img src={avatar} alt="" width='20%' />)}            
+            <ul>
+             {
+                lessons.map(lesson =>(
+                <li 
+                 key={lesson.id}
+                 style={{color: lessonId === lesson.id ? 'red' :'#333'}}
+                 onClick={()=>setLessonId(lesson.id)}
+                >
+                    {lesson.name}
+                </li>))
+             }  
+            </ul>
         </div>
     );
 }
