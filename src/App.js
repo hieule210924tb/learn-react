@@ -1,20 +1,19 @@
-import { useState, memo } from "react";
+import { useState , useCallback} from "react";
 import Content from './Content'
 
 function App() {
   // const [show, setShow] = useState(false)
   const [count, setCount] = useState(60)
     
-    const increase =()=>{
-        setCount(count+1)
-    }
+    const handleIncrease =useCallback(()=>{
+        setCount(prevCount => prevCount+1)
+    },[])
  
    
     return (
       <div style={{padding:'30px'}}>
-          <Content counts= {count} />
+          <Content onIncrease ={handleIncrease} />
           <h1>{count}</h1>
-          <button onClick={increase}>Click me!</button>
         </div>
     );
   // return (
