@@ -1,60 +1,48 @@
-import { useState , useMemo, useRef} from "react";
-import Content from './Content'
-
-function App() {
-  const [name, setName] = useState('')
-  const [price, setPrice] = useState('')
-  const [products, setProducts] = useState([])
-
-  const nameRef = useRef() // thêm useRef() để khi add xong nó tự focus vào thẻ input
-  const handleSubmit = () =>{
-      setProducts([...products,{
-        name,
-        price: parseInt(price) // đổi sang dạng số
-      }])
-      setName('')
-      setPrice('')
-      nameRef.current.focus()
-  }
-  
-   const total = useMemo(()=>{
-      const result=  products.reduce((result, prod)=>{
-        return  result + prod.price
-    }
-    ,0)
-    return result
-   },[products])
+import { useReducer} from "react";
+// import Content from './Content'
+//  1 .Phân tích bài toán với useState
+// 1.1 . Init state =0
+// 1.2 . Actions : down(state -1) / up(sate +1)
+//  2 .Phân tích bài toán với useReducer
+// 2.1 . Init state =0
+// 2.2 . Actions : down(state -1) / up(sate +1)
+// 2.3 . Tạo ra Reducer
+// 2.4 . Dispatch (là một thuật ngữ để đi kích hoạt Reducer)
 
 
-  return(
-    < div style={{padding:'30px'}}>
-       <input
-         ref={nameRef}
-         value={name}
-         placeholder="Nhập tên sản phẩm"
-         onChange={(e) => setName(e.target.value)}
-       />
-       <br />
-       <input
-        value={price}
-        placeholder="Nhập giá sản phẩm"
-         onChange={(e) => setPrice(e.target.value)}
-       />
-        <br />
-        Total: {total}
-        <br />
-       <button 
-         onClick={handleSubmit}
-       >Add</button>
-       <ul>
-       {
-        products.map((product, index) =>(
-          <li key={index}>{product.name} - {product.price}</li>
-        ))
+ // B1 : Tạo init state = 0
+   const initState =0
+ // B2 : Actions
+   const UP_ACTION = 'up'
+   const DOWN_ACTION = 'down'
+ // B2 :Tạo Reducer
+   const reducer = (state, action) =>{
+       switch(action){
+           case UP_ACTION:
+            return state + 1;
+           case DOWN_ACTION:
+              return state - 1;
+          default:
+             throw new Error('Invalid action')
        }
-       </ul>
-   </div>
-  )
+   }
+function App() {
+   const [count, dispatch] = useReducer(reducer, initState)
+ 
+    return(
+      <div style={{padding:'30px'}}>
+          <h1>{count}</h1>
+
+          <button 
+             onClick={()=>dispatch(DOWN_ACTION)}
+            >Down
+            </button>
+          <button 
+            onClick={()=>dispatch(UP_ACTION)}
+            >Up
+          </button>
+    </div>
+    )
 }
 
 export default App;
