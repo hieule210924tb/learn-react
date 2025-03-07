@@ -3,25 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-//fack comment
-function emitComment(id){
-      setInterval(()=>{
-        window.dispatchEvent(
-          new CustomEvent(`lesson-${id}`,{
-            detail:` Nội dung comment của lesson-${id}` //detail phát đi cái nào , thì nhận lại CustomEvent cái đó
-          })
-        )
-      },2000)
-}
-emitComment(1)
-emitComment(2)
-emitComment(3)
+import {ThemeProvider} from './ThemeContext'
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-  //   <App />
   // </React.StrictMode>
-  <App/>
+  <>
+    <ThemeProvider>
+    <App />
+    </ThemeProvider>
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function
