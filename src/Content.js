@@ -1,9 +1,7 @@
-import Paragraph from "./Paragraph";
-
 function Content() {
     return (
         <div>
-           <Paragraph />
+          <h2>Helllo ae</h2>
         </div>
     );
 }
