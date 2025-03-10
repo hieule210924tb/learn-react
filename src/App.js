@@ -1,12 +1,14 @@
-import Heading from './component/Heading'
-import Paragraph from './component/Paragraph'
+import Button from './component/Button'
 
 function App(){
   
   return (
      <div style={{ padding:'0 30px'}}>
-         <Heading/>
-         <Paragraph/>
+         <Button primary/>
+         <Button secondary/>
+         <Button success/>
+         <Button danger/>
+         <Button warning/>
      </div>
   )
 }

@@ -1,0 +1,30 @@
+.btn{
+    padding: 4px 16px;
+    border-radius: 10px;
+    border: 1px solid #999;
+}
+.primary{
+    color: #fff;
+    cursor: pointer;
+    background-color: #0d6efd;
+}
+.secondary{
+    color: #fff;
+    cursor: pointer;
+    background-color: #6c757d;
+}
+.success{
+    color: #fff;
+    cursor: pointer;
+    background-color: #198754;
+}
+.danger{
+    color: #fff;
+    cursor: pointer;
+    background-color: #dc3545;
+}
+.warning{
+    color: #fff;
+    cursor: pointer;
+    background-color: #ffc107;
+}
