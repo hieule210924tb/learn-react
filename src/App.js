@@ -8,7 +8,7 @@ function App(){
          <Button secondary/>
          <Button success/>
          <Button danger/>
-         <Button warning/>
+         <Button warning disabled/>
      </div>
   )
 }

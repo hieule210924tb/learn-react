@@ -9,6 +9,8 @@
     "react_demo": "file:",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
+    "sass": "^1.85.1",
+    "scss": "^0.2.4",
     "web-vitals": "^4.2.4"
   },
   "scripts": {
